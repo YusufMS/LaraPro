@@ -7,6 +7,7 @@ use App\Post;
 
 use App\Category;
 use App\User;
+use App\Tag;
 
 class PagesController extends Controller
 {
@@ -21,7 +22,8 @@ class PagesController extends Controller
     public function blog(){
         $posts = Post::where('visibility', 1)->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
-        return view('pages.blog.blog', compact('posts', 'categories'));
+        $tags = Tag::all();
+        return view('pages.blog.blog', compact('posts', 'categories', 'tags'));
     }
 
     public function blogByCategory($id){
@@ -54,7 +56,13 @@ class PagesController extends Controller
         return view('pages.contact');
     }
 
+    // public function search(){
+    //     return ('ABC');
+    // }
+
     public function dashboard(){
         //dashboard
     }
+
+    
 }

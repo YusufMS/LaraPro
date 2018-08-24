@@ -19,8 +19,8 @@ class CreatePostsTable extends Migration
             $table->string('sub_title');
             $table->mediumText('content');
             $table->boolean('visibility');
-            $table->integer('view_count');
-            $table->integer('likes');
+            $table->integer('view_count')->nullable();
+            $table->integer('likes')->nullable();
             // $table->integer('rating_id');
             $table->timestamps();
         });

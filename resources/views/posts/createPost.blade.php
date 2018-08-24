@@ -51,20 +51,16 @@
                     <label for = "hide" class = "custom-control-label">Hide Post</label>
                     
                 </div>
-                <div class="ui loading fluid multiple search selection dropdown">
-                    <input name="country" value="kp" type="hidden">
-                    <i class="dropdown icon"></i>
-                    <input class="search">
-                    <div class="default text">Search...</div>
-                    <div class="menu">
-                        <div class="item">Choice 1</div>
-                        <div class="item">Choice 2</div>
-                        <div class="item">Choice 3</div>
-                    </div>
-                </div>
                 
             </div>
-            <div>
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <select class="js-example-basic-multiple form-control" name="tags[]" multiple="multiple">
+                    @foreach($tags as $tag)
+                    <option value="{{$tag->id}}">{{ucwords($tag->tag)}}</option>
+                    @endforeach
+                </select>
+            </div>
                 
                 {{-- {{Form::submit('Create Post',['class' => 'btn btn-success'])}} --}}
                 <button class="btn btn-success material-icons" type="submit" data-toggle="tooltip" title="Create Post" data-placement="top">create</button>
@@ -73,9 +69,19 @@
                 {{-- {{Form::button('Cancel',['type'=>'reset', 'class' => 'btn btn-danger'])}} --}}
                 
             </div>
-            
+            @csrf
         {!! Form::close() !!}
     </div>
     
+
+    {{-- scripts --}}
+
+    <script>
+    $(document).ready(function() {
+    $('.js-example-basic-multiple').select2({
+        tags:true
+    });
+    });
+    </script>
 
 @endsection

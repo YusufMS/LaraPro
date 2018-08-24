@@ -6,6 +6,21 @@
     <h1 class="font-weight-normal text-center">Blog Posts</h1>
     <hr>
     <div class="py-4">
+        {{-- Search . Something wrong in route. Try again when mind is fresh
+            
+            <form action="blog/search" method="post" class="form">
+        <div class="row">
+            <div class="col-8">
+            <select class="js-example-basic-multiple form-control" style="width:60%" name="tags[]" multiple="multiple">
+                @foreach($tags as $tag)
+                <option value="{{$tag->id}}">{{ucwords($tag->tag)}}</option>
+                @endforeach
+            </select>
+            <input type="submit" value="Submit" class="">
+        </div> 
+        </div>--}}
+            
+        </form>
         <h5>Post Categories</h5>
         @if(isset($id))
         @foreach($categories as $category)
@@ -63,5 +78,15 @@
     </div>
     @endif
 </div>
+
+{{-- scripts --}}
+<script>
+    $(document).ready(function() {
+    $('.js-example-basic-multiple').select2({
+        placeholder: "Seach posts by Tags",
+        width: "style",
+    });
+    });
+</script>
     
 @endsection

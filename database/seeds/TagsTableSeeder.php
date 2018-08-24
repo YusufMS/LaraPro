@@ -11,16 +11,16 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        App\Tag::create(['tag' => 'Phones']);
-        App\Tag::create(['tag' => 'Flowers']);
-        App\Tag::create(['tag' => 'Colors']);
-        App\Tag::create(['tag' => 'Films']);
-        App\Tag::create(['tag' => 'Leaders']);
-        App\Tag::create(['tag' => 'Movies']);
-        App\Tag::create(['tag' => 'Tech']);
-        App\Tag::create(['tag' => 'Geeks']);
-        App\Tag::create(['tag' => 'Laptops']);
-        App\Tag::create(['tag' => 'Web']);
-        App\Tag::create(['tag' => 'Laravel']);
+        App\Tag::create(['tag' => 'phones']);
+        App\Tag::create(['tag' => 'flowers']);
+        App\Tag::create(['tag' => 'colors']);
+        App\Tag::create(['tag' => 'films']);
+        App\Tag::create(['tag' => 'leaders']);
+        App\Tag::create(['tag' => 'movies']);
+        App\Tag::create(['tag' => 'tech']);
+        App\Tag::create(['tag' => 'geeks']);
+        App\Tag::create(['tag' => 'laptops']);
+        App\Tag::create(['tag' => 'web']);
+        App\Tag::create(['tag' => 'laravel']);
     }
 }

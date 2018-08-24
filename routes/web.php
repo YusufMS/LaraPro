@@ -23,6 +23,7 @@ Route::get('/blog/author/{id}', 'PagesController@blogByAuthor')->name('blogByAut
 // Route::get('/profile', 'PagesController@profile')->name('profilePage');
 Route::get('/contact', 'PagesController@contact')->name('contactPage');
 Route::get('/dashboard', 'PagesController@dashboard')->name('dashboard');
+// Route::post('/blog/search','PagesController@search')->name('blogBySearch');
 
 Route::resource('posts', 'PostsController');
 Auth::routes();

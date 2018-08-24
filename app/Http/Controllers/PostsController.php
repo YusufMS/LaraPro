@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\User;
 use App\Category;
+use App\Tag;
+use App\PostTag;
 
 class PostsController extends Controller
 {
@@ -34,7 +36,8 @@ class PostsController extends Controller
     public function create()
     {
         $category = Category::all();
-        return view('posts.createPost',compact('category'));
+        $tags = Tag::all();
+        return view('posts.createPost',compact('category', 'tags'));
     }
 
     /**
@@ -45,6 +48,7 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'title' => 'required|max:255',
             'body' => 'required',
@@ -63,8 +67,7 @@ class PostsController extends Controller
         $post->visibility = $request->visibility;
         $post->user_id = Auth::id();
  
-
-
+        // Saving image path
         if ($request->hasFile('image')){
             $filenameWithExt = $request->file('image')->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -79,7 +82,33 @@ class PostsController extends Controller
 
         $post->save(); 
 
-        return redirect('posts/create')->with('success', 'New post successfully created');;
+        // Saving tags of the post to pivot table
+        $tags = Tag::all()->pluck('tag')->toArray();
+        foreach ($request->tags as $post_tag){
+            $check_tag = strtolower($post_tag);
+            if(!in_array($check_tag, $tags)){
+                $new_tag = new Tag;
+                $new_tag->tag = $check_tag;
+                $new_tag->save();
+                $post_tags = new PostTag;
+                $post_tags->post_id = $post->id;
+                $post_tags->tag_id = $new_tag->id;
+                $post_tags->save();
+            }else{
+                $post_tags = new PostTag;
+                $post_tags->post_id = $post->id;
+                $post_tags->tag_id = $post_tag;
+                $post_tags->save();
+            }
+        }
+        // foreach ($request->tags as $post_tag){
+        //     $post_tags = new PostTag;
+        //     $post_tags->post_id = $post->id;
+        //     $post_tags->tag_id = $post_tag;
+        //     $post_tags->save();
+        // }
+
+        return redirect('posts/create')->with('success', 'New post successfully created');
     }
 
     /**
@@ -91,6 +120,10 @@ class PostsController extends Controller
     public function show($id)
     {        
         $post = Post::find($id);
+        if ($post->user_id !== Auth::id()){
+            $post->view_count = $post->view_count+1;
+            $post->save();
+        }
         $user = User::where('id', $post->user_id)->first();
         $comments = $post->comments;
         $commentors = User::all();
