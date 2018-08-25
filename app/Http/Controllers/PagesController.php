@@ -52,10 +52,6 @@ class PagesController extends Controller
     //     return view('pages.profile');
     // }
 
-    // public function contact(){
-    //     return view('pages.contact');
-    // }
-
     // public function search(){
     //     return ('ABC');
     // }

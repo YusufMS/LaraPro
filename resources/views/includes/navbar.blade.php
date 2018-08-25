@@ -19,9 +19,9 @@
                         <a class="nav-link" href="{{route('aboutPage')}}">About</a>
                     </li>
                     </li>
-                    <li class="nav-item{!! url()->current() == route('contactPage') ? ' active' : '' !!}">
+                    {{-- <li class="nav-item{!! url()->current() == route('contactPage') ? ' active' : '' !!}">
                         <a class="nav-link" href="{{route('contactPage')}}">Contact</a>
-                    </li>
+                    </li> --}}
                 @else
             
                     <li class="nav-item{!! url()->current() == route('indexPage') ? ' active' : '' !!}">

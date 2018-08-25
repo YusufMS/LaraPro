@@ -11,6 +11,7 @@ use App\Category;
 use App\Tag;
 use App\PostTag;
 use App\Comment;
+use App\PostLikes;
 
 class PostsController extends Controller
 {
@@ -221,5 +222,33 @@ class PostsController extends Controller
         $notification->markAsRead();
         $id = Comment::find($notification->data['comment_id'])->post->id;
         return redirect('posts/' . $id);
+    }
+    
+    public function postLike($id){
+        $post = Post::find($id);
+        $post->likes = $post->likes + 1;
+        $post->save();
+
+        $post_like = new PostLikes;
+        $post_like->post_id = $id;
+        $post_like->user_id = Auth::id(); 
+        $post_like->save();
+
+        return back();
+        // return "Avll";
+    }
+
+    public function postUnlike($id){
+        $post = Post::find($id);
+        $post->likes = $post->likes - 1;
+        $post->save();
+
+        $post_like_id = $post->post_likes->where('user_id', Auth::id())->first()->id;
+
+        $post_like = PostLikes::find($post_like_id);
+        $post_like->delete();
+
+        return back();
+        // return "Avll";
     }
 }

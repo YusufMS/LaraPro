@@ -27,6 +27,9 @@ Route::get('/dashboard', 'PagesController@dashboard')->name('dashboard');
 
 Route::resource('posts', 'PostsController');
 Route::get('notificationClick/{id}', 'PostsController@notificationClick')->name('posts.notificationClick');
+Route::get('posts/like/{id}', 'PostsController@postLike');
+Route::get('posts/unlike/{id}', 'PostsController@postUnlike');
+
 Auth::routes();
 
 //delete if no errors occur after finishing up

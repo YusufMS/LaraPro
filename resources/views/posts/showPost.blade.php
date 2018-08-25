@@ -29,10 +29,21 @@
                 @endif
                 <p class="card-text">{{$post->content}}</p>
             </div>
-            <div class="card-footer py-2">
+            <div class="card-footer py-1">
+                <small class = "text-muted"><strong>Published : {{$post->formatted_created_date}}</strong></small>
+                <strong>|</strong>
                 <small class = "text-muted"><strong>{{$post->view_count}}</strong> Views</small>
-                <small class = "float-right text-muted"><strong>Published : {{$post->formatted_created_date}}</strong></small>
-                
+                <strong>|</strong>
+                <small class="text-muted"><strong>{{$post->likes}}</strong> Likes</small>
+                @if($post->user_id !== Auth::id())
+                    @if($post->post_likes->where('user_id', Auth::id())->first() === null)
+                    <a href="like/{{$post->id}}" type="" class="float-right btn btn-primary p-1">
+                        <i class="material-icons md-18 align-middle">thumb_up</i> Like</a>
+                    @else
+                    <a href="unlike/{{$post->id}}" type="" class="float-right btn btn-danger p-1">
+                        <i class="material-icons md-18 align-middle">thumb_down</i> Unlike</a>
+                    @endif
+                @endif
             </div>
         </div>
 

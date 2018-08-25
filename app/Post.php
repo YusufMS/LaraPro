@@ -22,6 +22,10 @@ class Post extends Model
         return $this->belongsToMany('App\Tags');
     }
 
+    public function post_likes(){
+        return $this->hasMany('App\PostLikes');
+    }
+
     public function getFormattedCreatedDateAttribute(){
         // return $this->created_at->toFormattedDateString();
         return $this->created_at->diffForHumans();
