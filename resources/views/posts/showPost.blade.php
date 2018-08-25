@@ -30,6 +30,7 @@
                 <p class="card-text">{{$post->content}}</p>
             </div>
             <div class="card-footer py-2">
+                <small class = "text-muted"><strong>{{$post->view_count}}</strong> Views</small>
                 <small class = "float-right text-muted"><strong>Published : {{$post->formatted_created_date}}</strong></small>
                 
             </div>

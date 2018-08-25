@@ -40,8 +40,8 @@
                     <li class="nav-item{!! url()->current() == route('aboutPage') ? ' active' : '' !!}">
                         <a class="nav-link" href="{{route('aboutPage')}}"><i class="material-icons md-inactive align-middle">info</i> About</a>
                     </li>
-                    <li class="nav-item{!! url()->current() == route('contactPage') ? ' active' : '' !!}">
-                        <a class="nav-link" href="{{route('contactPage')}}"><i class="material-icons md-inactive align-middle">contact_support</i> Contact</a>
+                    {{-- <li class="nav-item{!! url()->current() == route('contactPage') ? ' active' : '' !!}">
+                        <a class="nav-link" href="{{route('contactPage')}}"><i class="material-icons md-inactive align-middle">contact_support</i> Contact</a> --}}
                     {{-- <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>
                     </li> --}}
@@ -57,6 +57,38 @@
             @guest
 
             @else
+            {{-- Notifications --}}
+                <ul class="navbar-nav navbar-right">
+                    <li class="nav-item dropdown">
+                    <a class="nav-link" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons align-middle">notifications</i><span class="small"><sup class="badge badge-pill badge-warning">{{Auth::user()->unreadNotifications->count()}}</sup></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right rounded-0" aria-labelledby="navbarDropdown">
+                        <div class="text-center font-weight-bold">Notifications</div><hr class="my-1">
+                        @foreach(Auth::user()->notifications as $notification)
+                            @if($notification->read_at == null)
+                            <small><a class="dropdown-item" href="{{url('notificationClick/' . $notification->id)}}">
+                                <strong>{{App\Comment::find($notification->data['comment_id'])->user->first_name}}</strong>
+                                commented on your post
+                                <Strong>{{App\Comment::find($notification->data['comment_id'])->post->title}}</Strong><br>
+                                "{{str_limit($notification->data['content'], 30 , '...')}}"
+                                {{$notification->created_at->diffForHumans()}}
+                            </a></small>
+                            @else
+                            <small><a class="dropdown-item text-muted" href="{{url('notificationClick/' . $notification->id)}}">
+                                <strong>{{App\Comment::find($notification->data['comment_id'])->user->first_name}}</strong>
+                                commented on your post
+                                <Strong>{{App\Comment::find($notification->data['comment_id'])->post->title}}</Strong><br>
+                                {{$notification->data['content']}}
+                                {{$notification->created_at->diffForHumans()}}
+                            </a></small>
+                            @endif
+                        @endforeach
+                        
+                    </div>
+                    </li>
+                </ul>
+
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

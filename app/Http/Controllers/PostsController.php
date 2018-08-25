@@ -10,6 +10,7 @@ use App\User;
 use App\Category;
 use App\Tag;
 use App\PostTag;
+use App\Comment;
 
 class PostsController extends Controller
 {
@@ -210,5 +211,15 @@ class PostsController extends Controller
         
         $post->delete();
         return redirect('posts')->with('success', 'Post deleted successfully');
+    }
+
+    public function notificationClick($id)
+    {
+        // return 'ABC';
+        $user = Auth::user();
+        $notification = $user->notifications->where('id', $id)->first();
+        $notification->markAsRead();
+        $id = Comment::find($notification->data['comment_id'])->post->id;
+        return redirect('posts/' . $id);
     }
 }

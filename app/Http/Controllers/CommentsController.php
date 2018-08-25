@@ -9,6 +9,10 @@ use App\Post;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
+use App\Notifications\PostComment;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
+
 
 class CommentsController extends Controller
 {
@@ -61,6 +65,14 @@ class CommentsController extends Controller
         $comment->user_id = Auth::id();
         $comment->comment_body = $request->comment;
         $comment->save();
+
+        // Sending Notifications
+        // $from_user = User::find(Auth::id());
+        if(Auth::id() !== $comment->post->user->id){
+            $to_user = User::find($comment->post->user->id);
+            $to_user->notify(new PostComment($comment));
+        }
+        
         
         return back();
     }

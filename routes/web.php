@@ -21,11 +21,12 @@ Route::get('/blog', 'PagesController@blog')->name('blogPage');
 Route::get('/blog/category/{id}', 'PagesController@blogByCategory')->name('blogByCategory');
 Route::get('/blog/author/{id}', 'PagesController@blogByAuthor')->name('blogByAuthor');
 // Route::get('/profile', 'PagesController@profile')->name('profilePage');
-Route::get('/contact', 'PagesController@contact')->name('contactPage');
+// Route::get('/contact', 'PagesController@contact')->name('contactPage');
 Route::get('/dashboard', 'PagesController@dashboard')->name('dashboard');
 // Route::post('/blog/search','PagesController@search')->name('blogBySearch');
 
 Route::resource('posts', 'PostsController');
+Route::get('notificationClick/{id}', 'PostsController@notificationClick')->name('posts.notificationClick');
 Auth::routes();
 
 //delete if no errors occur after finishing up
