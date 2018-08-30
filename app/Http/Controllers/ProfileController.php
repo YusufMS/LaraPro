@@ -23,7 +23,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = User::all();
+        $profiles = User::all()->except(Auth::id());
         
         return view('profiles.profileIndex', compact('profiles', 'profile_photo'));
     }

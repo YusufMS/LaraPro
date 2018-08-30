@@ -23,12 +23,16 @@ Route::get('/blog/author/{id}', 'PagesController@blogByAuthor')->name('blogByAut
 // Route::get('/profile', 'PagesController@profile')->name('profilePage');
 // Route::get('/contact', 'PagesController@contact')->name('contactPage');
 Route::get('/dashboard', 'PagesController@dashboard')->name('dashboard');
-// Route::post('/blog/search','PagesController@search')->name('blogBySearch');
+Route::post('blog','PagesController@search')->name('blogBySearch');
+
 
 Route::resource('posts', 'PostsController');
 Route::get('notificationClick/{id}', 'PostsController@notificationClick')->name('posts.notificationClick');
 Route::get('posts/like/{id}', 'PostsController@postLike');
 Route::get('posts/unlike/{id}', 'PostsController@postUnlike');
+
+// Email send route
+Route::get('posts/{id}/sendMail', 'postsController@send')->name('posts.sendMail');
 
 Auth::routes();
 

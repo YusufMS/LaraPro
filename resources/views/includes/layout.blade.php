@@ -104,15 +104,15 @@
                     </div>
                     @include('includes.sidebarRight')
                 @else
-                    @include('includes.sidebarLeft')
-
+                    {{-- @include('includes.sidebarLeft') --}}
+                    <div class="col-sm-2"></div>
                     <div class="col-sm-8 text-left"> 
                         <br>
                         @include('includes.messages')
                         @yield('content')
                         <br>
                     </div>
-                    @include('includes.sidebarRight')
+                    {{-- @include('includes.sidebarRight') --}}
                 @endguest
                 
                 

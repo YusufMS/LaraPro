@@ -65,6 +65,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right rounded-0" aria-labelledby="navbarDropdown">
                         <div class="text-center font-weight-bold">Notifications</div><hr class="my-1">
+
+
                         @foreach(Auth::user()->notifications as $notification)
                             @if($notification->read_at == null)
                             <small><a class="dropdown-item" href="{{url('notificationClick/' . $notification->id)}}">
@@ -79,7 +81,7 @@
                                 <strong>{{App\Comment::find($notification->data['comment_id'])->user->first_name}}</strong>
                                 commented on your post
                                 <Strong>{{App\Comment::find($notification->data['comment_id'])->post->title}}</Strong><br>
-                                {{$notification->data['content']}}
+                                "{{str_limit($notification->data['content'], 30, '...')}}"
                                 {{$notification->created_at->diffForHumans()}}
                             </a></small>
                             @endif

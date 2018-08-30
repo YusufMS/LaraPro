@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+
+use App\Mail\PostFeedback;
+use Illuminate\Support\Facades\Mail;
 use App\Post;
 use App\User;
 use App\Category;
@@ -250,5 +253,19 @@ class PostsController extends Controller
 
         return back();
         // return "Avll";
+    }
+
+    public function send(Request $request, $id)
+    {
+        $post = Post::find($id);
+
+        $mail_info = new \stdClass();
+        $mail_info->post_title = $post->title;
+        $mail_info->feedback = $request->feedback_message;
+        $mail_info->sender = Auth::user()->full_name;
+        $mail_info->receiver = $post->user->full_name;
+        
+        Mail::to("yousuf2ysf@gmail.com")->send(new PostFeedback($mail_info));
+        return back()->with('success', 'Your e-mail has been successfully sent');
     }
 }

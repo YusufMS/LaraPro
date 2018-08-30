@@ -6,9 +6,9 @@
     <h1 class="font-weight-normal text-center">Blog Posts</h1>
     <hr>
     <div class="py-4">
-        {{-- Search . Something wrong in route. Try again when mind is fresh
             
-            <form action="blog/search" method="post" class="form">
+    {{-- <form action="{{route('blogBySearch')}}" method="post" class="form">
+        {{ csrf_field() }}
         <div class="row">
             <div class="col-8">
             <select class="js-example-basic-multiple form-control" style="width:60%" name="tags[]" multiple="multiple">
@@ -18,9 +18,9 @@
             </select>
             <input type="submit" value="Submit" class="">
         </div> 
-        </div>--}}
+        </div>
             
-        </form>
+        </form> --}}
         <h5>Post Categories</h5>
         @if(isset($id))
         @foreach($categories as $category)

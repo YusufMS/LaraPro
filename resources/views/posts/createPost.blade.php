@@ -53,6 +53,8 @@
                 </div>
                 
             </div>
+
+            
             <div class="form-group">
                 <label for="tags">Tags</label>
                 <select class="js-example-basic-multiple form-control" name="tags[]" multiple="multiple">
