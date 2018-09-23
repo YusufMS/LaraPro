@@ -32,6 +32,6 @@ class PostFeedback extends Mailable
     public function build()
     {
         return $this->from('dxdx7080@gmail.com')
-                    ->view('mails.postFeedback');
+                    ->markdown('mails.postFeedback');
     }
 }

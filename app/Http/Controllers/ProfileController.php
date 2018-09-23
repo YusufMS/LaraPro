@@ -112,6 +112,10 @@ class ProfileController extends Controller
     {
         $profile = User::find($id);
         $social_media = unserialize($profile->socialMediaLinks);
+        if($id != Auth::id()){
+            $profile->view_count = $profile->view_count + 1;
+            $profile->save();
+        }
         return view('profiles.showProfile', compact(['profile', 'social_media']));
     }
 

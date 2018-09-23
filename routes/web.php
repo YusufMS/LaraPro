@@ -14,6 +14,7 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
 Route::resource('profile', 'ProfileController');
 Route::get('/', 'PagesController@index')->name('indexPage');
 Route::get('/about', 'PagesController@about')->name('aboutPage');
@@ -26,8 +27,9 @@ Route::get('/dashboard', 'PagesController@dashboard')->name('dashboard');
 Route::post('blog','PagesController@search')->name('blogBySearch');
 
 
+
 Route::resource('posts', 'PostsController');
-Route::get('notificationClick/{id}', 'PostsController@notificationClick')->name('posts.notificationClick');
+Route::get('notificationClick/{notification_id}/{post_id}', 'PostsController@notificationClick')->name('posts.notificationClick');
 Route::get('posts/like/{id}', 'PostsController@postLike');
 Route::get('posts/unlike/{id}', 'PostsController@postUnlike');
 
@@ -42,4 +44,7 @@ Route::get('/home', function(){
 });
 
 Route::resource('comments', 'CommentsController');
+
+// Admin routes
+Route::get('admin', 'AdminController@home');
 

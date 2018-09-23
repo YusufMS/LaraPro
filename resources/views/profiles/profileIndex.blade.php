@@ -3,6 +3,13 @@
 <h1 class="font-weight-normal text-center">Profiles</h1>
 <br>
 <table class="table">
+    <tr>
+        
+        <th colspan="2">Name</th>
+        <th>User Type</th>
+        <th>Occupation</th>
+        <th></th>
+    </tr>
     @foreach($profiles as $profile)
     <tr>
         <td>
@@ -14,8 +21,8 @@
                 {{-- <span class="font-weight-bold align-middle">{{$profile->first_name . ' ' . $profile->last_name}}</span></td> --}}
         <td class="font-weight-bold align-middle">{{$profile->full_name}}</td>
         {{-- <td class="align-middle">{{$profile->user_name}}</td> --}}
-        <td class="align-middle">{{$profile->occupation}}</td>
-        <td class="align-middle">Lives in {{$profile->livesIn}}</td>
+        <td class="align-middle">{{title_case($profile->roles()->first()->role)}}</td>
+        <td class="align-middle">{{$profile->occupation ? title_case($profile->occupation) : 'N/A'}}</td>
         <td colspan="2" class="align-middle">
             <a href="#" class="btn btn-success float-right mx-1">Message</a>
             <a href="{{route('profile.show', $profile->id)}}" class="btn btn-primary float-right ml-1">View</a>

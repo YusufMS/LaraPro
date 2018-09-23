@@ -11,6 +11,8 @@ use App\Tag;
 use App\Charts\SampleChart;
 use Charts;
 use DB;
+use App\PostTag;
+use Alert;
 
 use Auth;
 
@@ -25,29 +27,28 @@ class PagesController extends Controller
     }
 
     public function blog(){
-        $posts = Post::where('visibility', 1)->orderBy('created_at', 'desc')->paginate(02);
+        $posts = Post::where('visibility', 1)->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
         $tags = Tag::all();
         return view('pages.blog.blog', compact('posts', 'categories', 'tags'));
     }
 
     public function blogByCategory($id){
-
+        $tags = Tag::all();
         $categories = Category::all();
         
         $posts = Category::find($id)->posts()->where('visibility', 1)->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('pages.blog.blog', compact('posts', 'categories', 'id'));
+        return view('pages.blog.blog', compact('posts', 'categories', 'id', 'tags'));
     }
 
     public function blogByAuthor($id){
-        $posts = Post::where('visibility', 1)->where('user_id', $id)->orderBy('created_at', 'desc')->paginate();
+        $posts = Post::where('visibility', 1)->where('user_id', $id)->orderBy('created_at', 'desc')->paginate(10);
         $author = User::find($id);
         return view('pages.blog.blogByAuthor', compact('posts','author'));
     }
 
     public function about(){
-
         return view('pages.about');
     }
 
@@ -58,32 +59,15 @@ class PagesController extends Controller
     // }
 
     public function search(Request $request){
-        
-        // // return $request;
-        // return DB::select('select posts.id,tags.id from posts,tags where posts.id=tags.id', [1]);
-        // $tags_array = array();
-        // // foreach($request->tags as $tag_id){
-        // //     Tag::find($tag_id)->post
-        // // }
+        $post_ids = PostTag::select('post_id')->whereIn('tag_id', $request->tags)->get();
+        $tags = Tag::all();
+        $search_tags = Tag::whereIn('id', $request->tags)->get();
+        $tags_count = $search_tags->count();
 
-        // $post_id_array = array();
-        // foreach ($request->tags as $tag){
-        //     if(!in_array(Tag::find($tag)->post[0]->id, $post_id_array)){
-        //         array_push($post_id_array, Tag::find($tag)->post[0]->id);
-        //     }
-            
-        //     // dd($x);
-        //     // foreach ($tag->post as $tag_post){
-        //     //     array_add($post_id_array, $tag_post->id , $tag_post->id);
-        //     // };
-        // }
-        // dd($post_id_array);
-        // $post = Post::where('id', $post_id_array)->get();
-        // dd($post);
-        
-        // $posts = Post::all();
+        $posts = Post::whereIn('id', $post_ids)->paginate(10);
+        $loop_count = 0;
 
-        // // return $request;
+        return view('pages.blog.blogBySearch', compact('posts', 'search_tags', 'tags_count', 'loop_count', 'tags'));
     }
 
     public function dashboard(){

@@ -69,19 +69,21 @@
 
                         @foreach(Auth::user()->notifications as $notification)
                             @if($notification->read_at == null)
-                            <small><a class="dropdown-item" href="{{url('notificationClick/' . $notification->id)}}">
-                                <strong>{{App\Comment::find($notification->data['comment_id'])->user->first_name}}</strong>
+                            <small><a class="dropdown-item" href="{{route('posts.notificationClick', ['notification_id'=>$notification->id, 'post_id'=>$notification->data['post_id']])}}">
+                                {!!$notification->data['content']!!} <br>
+                                {{-- <strong>{{App\Comment::find($notification->data['comment_id'])->user->first_name}}</strong>
                                 commented on your post
                                 <Strong>{{App\Comment::find($notification->data['comment_id'])->post->title}}</Strong><br>
-                                "{{str_limit($notification->data['content'], 30 , '...')}}"
+                                "{{str_limit($notification->data['content'], 30 , '...')}}" --}}
                                 {{$notification->created_at->diffForHumans()}}
                             </a></small>
                             @else
-                            <small><a class="dropdown-item text-muted" href="{{url('notificationClick/' . $notification->id)}}">
-                                <strong>{{App\Comment::find($notification->data['comment_id'])->user->first_name}}</strong>
+                            <small><a class="dropdown-item text-muted" href="{{route('posts.notificationClick', ['notification_id'=>$notification->id, 'post_id'=>$notification->data['post_id']])}}">
+                                {!!($notification->data['content'])!!} <br>
+                                {{-- <strong>{{App\Comment::find($notification->data['comment_id'])->user->first_name}}</strong>
                                 commented on your post
                                 <Strong>{{App\Comment::find($notification->data['comment_id'])->post->title}}</Strong><br>
-                                "{{str_limit($notification->data['content'], 30, '...')}}"
+                                "{{str_limit($notification->data['content'], 30, '...')}}" --}}
                                 {{$notification->created_at->diffForHumans()}}
                             </a></small>
                             @endif

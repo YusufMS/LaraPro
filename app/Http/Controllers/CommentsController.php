@@ -10,7 +10,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 
 use App\Notifications\PostComment;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notifiable;    
 use Illuminate\Support\Facades\Notification;
 
 

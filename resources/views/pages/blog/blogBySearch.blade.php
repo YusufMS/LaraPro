@@ -5,8 +5,6 @@
     <div class="container"></div>
     <h1 class="font-weight-normal text-center">Blog Posts</h1>
     <hr>
-    <div class="py-4">
-            
     <form action="{{route('blogBySearch')}}" method="post" class="form">
         {{ csrf_field() }}
         <div class="row">
@@ -17,31 +15,29 @@
                 @endforeach
             </select>
             <input type="submit" value="Search" class="btn btn-success">
+            <a type="button" class="btn btn-danger" href="{{route('blogPage')}}">Clear Search</a>
         </div> 
-        </div>
-            
-        </form>
-        <br>
-        <h5>Post Categories</h5>
-        @if(isset($id))
-        @foreach($categories as $category)
-        <a class="btn btn-sm btn-outline-primary my-1 {{ $id == $category->id ? 'active' : ''}}" href="{{route('blogByCategory', [$category->id])}}">{{$category->category_name}}</a>
-        @endforeach
-        <div><a class="btn btn-sm btn-outline-danger my-1" href="{{route('blogPage')}}">Clear Categories</a></div>
-        
-        <div class="pt-2 font-italic text-muted">Showing results for "{{$categories->find($id)->category_name}}" category</div>
-        @else
-        @foreach($categories as $category)
-        <a class="btn btn-sm btn-outline-primary" href="{{route('blogByCategory', [$category->id])}}">{{$category->category_name}}</a>
-        @endforeach
-        @endif
-        
-    </div>
+        </div> 
+    </form>
     <div>
+        <p class="font-italic text-muted">Showing results for
+            <strong>@foreach ($search_tags as $tag)
+                @php($loop_count++)
+                @if ($tags_count == $loop_count)
+                {{$tag->tag}}
+                @elseif($tags_count-1 == $loop_count)
+                {{$tag->tag}} or 
+                @else
+                {{$tag->tag}}, 
+                @endif
+            @endforeach</strong>
+            tag
+        </p>
     @if($posts->count() == 0)
     <p class="text-center lead">-No posts to show here right now-</p>
 
     @else
+    
     @foreach($posts as $post)
         <div class="card">
             <div class="row no-gutters">
@@ -57,9 +53,7 @@
                         @if($post->sub_title)
                         <p class="card-text">{{$post->sub_title}}</p>
                         @else
-                        <p class="card-text">
-                            <i>No Subtitile provided for this post</i>
-                        </p>
+                        <p class="card-text"><i>No Subtitile provided for this post</i></p>
                         @endif
                     </div>            
 
@@ -82,12 +76,12 @@
 
 {{-- scripts --}}
 <script>
-    $(document).ready(function() {
-    $('.js-example-basic-multiple').select2({
-        placeholder: "Search posts by Tags",
-        width: "style",
-    });
-    });
-</script>
+        $(document).ready(function() {
+        $('.js-example-basic-multiple').select2({
+            placeholder: "Search posts by Tags",
+            width: "style",
+        });
+        });
+    </script>
     
 @endsection

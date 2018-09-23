@@ -97,6 +97,14 @@
             {{-- Should be properly displayed --}}
         </tr>
     @endif
+    <tr>
+        <td>Number of Posts</td>
+        <td>{{$profile->posts->count()}} posts</td>
+    </tr>
+    <tr>
+        <td>Number of Profile Views</td>
+        <td>{{$profile->view_count}} views</td>
+    </tr>
     
     @if($profile->id == Auth::id())
     <tr>

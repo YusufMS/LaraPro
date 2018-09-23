@@ -74,6 +74,7 @@
                                 <select name="user_role" id="user_role" class="form-control{{ $errors->has('user_role') ? ' is-invalid' : '' }}">
                                     <option value="Viewer" selected>Viewer / Reader</option>
                                     <option value="Writer">Blog writer / contibutor</option>
+                                    <option value="Writer">Blog writer / contibutor</option>
                                 </select>
 
                                 {{-- <input id="user_role" placeholder="mark_antony" type="text" class="form-control{{ $errors->has('user_name') ? ' is-invalid' : '' }}" name="user_name" value="{{ old('user_name') }}" required> --}}

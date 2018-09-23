@@ -124,11 +124,10 @@
                 @endforeach
             </div>
         </div>
-                
         
 
         <script>
-            $(".delete").on("submit", function(){
+            $(".delete").on("submit", function(){            
                 return confirm("Are you sure you want to DELETE?");
             });
         </script>

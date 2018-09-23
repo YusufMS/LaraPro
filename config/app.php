@@ -147,6 +147,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -161,6 +162,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
+        Proengsoft\JsValidation\JsValidationServiceProvider::class,
+        
 
     ],
 
@@ -214,6 +217,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
 
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+        'Pusher' => Pusher\Pusher::class,
 
     ],
 

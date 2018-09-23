@@ -7,22 +7,21 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-// use App\User;
-use App\Comment;
+use App\Post;
+use Auth;
 
-class PostComment extends Notification
+class PostLike extends Notification
 {
     use Queueable;
-    public $comment;
-
+    public $post;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Comment $comment)
+    public function __construct(Post $post)
     {
-        $this->comment = $comment;
+        $this->post = $post;
     }
 
     /**
@@ -59,9 +58,8 @@ class PostComment extends Notification
     public function toArray($notifiable)
     {
         return [
-            'content' => '<strong>' . $this->comment->user->first_name . '</strong> commented on your <strong>post</strong> "' . str_limit($this->comment->comment_body,20,'...') . '"',
-            'post_id' => $this->comment->post->id,
-            // 'content' => $this->comment->comment_body
+            'content'=>'<strong>' . Auth::user()->first_name .'</strong> liked your <strong>post</strong>',
+            'post_id' => $this->post->id,
         ];
     }
 }

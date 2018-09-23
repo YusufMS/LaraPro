@@ -21,6 +21,7 @@
 
         {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
         {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script> {{-- imported for tooltip styling --}}
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -118,6 +119,9 @@
                 
             </div>
         </div>
+        {{-- <script src="js/sweetalert.min.js"></script> --}}
+
+    @include('sweet::alert')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
         <script>
             $(document).ready(function(){
@@ -127,6 +131,7 @@
         {{-- <footer class="container-fluid text-center">
             <p>Footer Text</p>
         </footer> --}}
+        
         
     </body>
 </html>

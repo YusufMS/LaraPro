@@ -15,6 +15,12 @@ use App\Tag;
 use App\PostTag;
 use App\Comment;
 use App\PostLikes;
+use Alert;
+
+// Namespace for notifications
+use App\Notifications\PostLike;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
 
 class PostsController extends Controller
 {
@@ -89,9 +95,18 @@ class PostsController extends Controller
 
         // Saving tags of the post to pivot table
         $tags = Tag::all()->pluck('tag')->toArray();
+        // return $request;
+        if(!is_null($request->tags)){
         foreach ($request->tags as $post_tag){
-            $check_tag = strtolower($post_tag);
+            if (is_numeric($post_tag)){
+                $check_tag = strtolower(Tag::find($post_tag)->tag);
+            } else {
+                $check_tag = strtolower($post_tag);
+            }
+            
+            
             if(!in_array($check_tag, $tags)){
+                // return $tags;
                 $new_tag = new Tag;
                 $new_tag->tag = $check_tag;
                 $new_tag->save();
@@ -105,15 +120,15 @@ class PostsController extends Controller
                 $post_tags->tag_id = $post_tag;
                 $post_tags->save();
             }
-        }
+        }}
         // foreach ($request->tags as $post_tag){
         //     $post_tags = new PostTag;
         //     $post_tags->post_id = $post->id;
         //     $post_tags->tag_id = $post_tag;
         //     $post_tags->save();
         // }
-
-        return redirect('posts/create')->with('success', 'New post successfully created');
+        Alert::success('New post was successfully created', 'Post Created')->autoclose(2500);
+        return redirect('posts/create');
     }
 
     /**
@@ -124,6 +139,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {        
+        
         $post = Post::find($id);
         if ($post->user_id !== Auth::id()){
             $post->view_count = $post->view_count+1;
@@ -195,8 +211,8 @@ class PostsController extends Controller
 
 
         $post->save(); 
-
-        return redirect('posts')->with('success', 'Post successfully updated');
+        Alert::success('Post was successfully updated', 'Update Successful')->autoclose(2500);
+        return redirect('posts');
     }
 
     /**
@@ -214,17 +230,18 @@ class PostsController extends Controller
         }
         
         $post->delete();
-        return redirect('posts')->with('success', 'Post deleted successfully');
+        Alert::success('Post was successfully deleted', 'Post Deleted')->autoclose(2500);
+        return redirect('posts');
     }
 
-    public function notificationClick($id)
+    public function notificationClick($notification_id, $post_id)
     {
         // return 'ABC';
         $user = Auth::user();
-        $notification = $user->notifications->where('id', $id)->first();
+        $notification = $user->notifications->where('id', $notification_id)->first();
         $notification->markAsRead();
-        $id = Comment::find($notification->data['comment_id'])->post->id;
-        return redirect('posts/' . $id);
+        // $id = Comment::find($notification->data['comment_id'])->post->id;
+        return redirect('posts/' . $post_id);
     }
     
     public function postLike($id){
@@ -236,6 +253,10 @@ class PostsController extends Controller
         $post_like->post_id = $id;
         $post_like->user_id = Auth::id(); 
         $post_like->save();
+
+        // sending notification
+        $to_user = $post->user;
+        $to_user->notify(new PostLike($post));
 
         return back();
         // return "Avll";
@@ -266,6 +287,7 @@ class PostsController extends Controller
         $mail_info->receiver = $post->user->full_name;
         
         Mail::to("yousuf2ysf@gmail.com")->send(new PostFeedback($mail_info));
-        return back()->with('success', 'Your e-mail has been successfully sent');
+        Alert::success('Your e-mail was sent successfully', 'E-mail Sent')->autoclose(2500);
+        return back();
     }
 }
